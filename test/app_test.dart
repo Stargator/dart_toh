@@ -5,7 +5,7 @@ import 'package:angular2/angular2.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-import 'package:angular_app/app_component.dart';
+import 'package:angular_tour_of_heroes/app_component.dart';
 
 @AngularEntrypoint()
 void main() {
@@ -23,8 +23,8 @@ void main() {
   });
 
   test('Greet world', () async {
-    await fixture.update((c) => c.name = 'World');
-    expect(fixture.text, 'Hello World');
+    await fixture.update((c) => c.hero = new Hero(1, "Windstorm"));
+    expect(fixture.text, 'Windstorm');
   });
 
   test('Greet world HTML', () {

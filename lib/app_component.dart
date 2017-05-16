@@ -4,9 +4,25 @@
 import 'package:angular2/angular2.dart';
 
 @Component(
-  selector: 'my-app',
-  template: '<h1>Hello {{name}}</h1>',
-)
+    selector: 'my-app',
+    template: '''
+    <h1>{{title}}</h1>
+    <h2>{{hero.name}} details!</h2>
+    <div><label>id: </label>{{hero.id}}</div>
+    <div>
+      <label>name: </label>
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </div>
+    ''')
+
 class AppComponent {
-  var name = 'Angular';
+  String title = "Tour of Heroes";
+  Hero hero = new Hero(1, "Windstorm");
+}
+
+class Hero {
+  final int id;
+  String name;
+
+  Hero(this.id, this.name);
 }
