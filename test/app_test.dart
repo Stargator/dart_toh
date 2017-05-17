@@ -23,7 +23,7 @@ void main() {
   });
 
   test('Greet world', () async {
-    await fixture.update((c) => c.hero = new Hero(1, "Windstorm"));
+    await fixture.update((component) => component.selectedHero = new Hero(1, "Windstorm"));
     expect(fixture.text, 'Windstorm');
   });
 
