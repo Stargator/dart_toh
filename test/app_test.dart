@@ -1,54 +1,23 @@
 @Tags(const ['aot']) // ignore: always_specify_types
 @TestOn('browser')
 
-import 'dart:async';
-
 import 'package:angular2/angular2.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:pageloader/objects.dart';
+
 import 'package:test/test.dart';
 
 import 'package:angular_tour_of_heroes/app_component.dart';
+import 'app_po.dart';
 
-/// Page Object for Application
-class AppPO {
-  @ByTagName('h1')
-  PageLoaderElement _title;
+/// Object that provides capability to test AppComponent
+NgTestFixture<AppComponent> fixture;
 
-  @FirstByCss('div')
-  PageLoaderElement _id;
-
-  @ByTagName('h2')
-  PageLoaderElement _name;
-
-  @ByTagName('input')
-  PageLoaderElement _input;
-
-  /// Component's title
-  Future<String> get title => _title.visibleText;
-
-  /// Id of listed Hero Object
-  Future<int> get heroId async {
-    final idAsString = (await _id.visibleText).split(' ')[1]; // ignore: always_specify_types
-    return int.parse(idAsString, onError: (_) => -1);
-  }
-
-  /// Name of listed Hero Object
-  Future<String> get heroName async {
-    final text = await _name.visibleText; // ignore: always_specify_types
-    return text.substring(0, text.lastIndexOf(' '));
-  }
-
-  /// Input Value
-  Future<String> type(String s) => _input.type(s);
-}
+/// Object mocking the AppComponent
+AppPO appPO;
 
 @AngularEntrypoint()
 void main() {
   final testBed = new NgTestBed<AppComponent>(); // ignore: always_specify_types
-  NgTestFixture<AppComponent> fixture;
-  AppPO appPO;
-  const windstormData = const <String, dynamic>{'id': 1, 'name': 'Windstorm'}; // ignore: always_specify_types
 
   setUp(() async {
     fixture = await testBed.create();
@@ -62,22 +31,75 @@ void main() {
     await disposeAnyRunningTest();
   });
 
-  test('Default Title from Page Object', () async {
-    expect(await appPO.title, 'Tour of Heroes');
+  group('Basics:', basicTests);
+  group('Select hero:', selectHeroTests);
+//  group('Bad Tests:', badTests); // Do NOT run these tests
+}
+
+/// Group of simple tests
+void basicTests() {
+  test('Page Title from Page Object', () async {
+    expect(await appPO.pageTitle, 'Tour of Heroes');
   });
 
-  test('initial hero properties', () async {
-    expect(await appPO.heroId, windstormData['id']);
-    expect(await appPO.heroName, windstormData['name']);
+  test('tab title', () async {
+    expect(await appPO.tabTitle, 'My Heroes');
   });
 
-  test('update hero name', () async {
+  test('hero count', () {
+    expect(appPO.heroes.length, 10);
+  });
+
+  test('no selected hero', () async {
+    expect(await appPO.selectedHero, null);
+  });
+}
+
+/// Group of tests related to selecting a hero
+void selectHeroTests() {
+  const targetHero = const <String, dynamic>{'id': 16, 'name': 'RubberMan'}; // ignore: always_specify_types
+
+  setUp(() async {
+    await appPO.clickHero(5);
+    appPO = await fixture.resolvePageObject(AppPO); // Refresh PO
+  });
+
+  test('is selected', () async {
+    expect(await appPO.selectedHero, targetHero);
+  });
+
+  test('show hero details', () async {
+    expect(await appPO.heroFromDetails, targetHero);
+  });
+
+//    expect(await appPO.heroName, targetHero['name'] + nameSuffix);
+  group('Update hero:', () {
     const nameSuffix = 'X'; // ignore: always_specify_types
+    final updatedHero = new Map.from(targetHero);
+    updatedHero['name'] = "${targetHero['name']}$nameSuffix";
 
-    await appPO.type(nameSuffix);
-    expect(await appPO.heroId, windstormData['id']);
-    expect(await appPO.heroName, "${windstormData['name']}$nameSuffix");
+    setUp(() async {
+      await appPO.type(nameSuffix);
+    });
+
+    tearDown(() async {
+      // Restore hero name
+      await appPO.clear();
+      await appPO.type(targetHero['name']);
+    });
+
+    test('name in list is updated', () async {
+      expect(await appPO.selectedHero, updatedHero);
+    });
+
+    test('name in details view is updated', () async {
+      expect(await appPO.heroFromDetails, updatedHero);
+    });
   });
+}
+
+/// Collection of tests that are fragile
+void badTests() {
 
   // Not a test we want to do.
   test('Use fixture to get innerHTMLL', () {
@@ -95,7 +117,7 @@ void main() {
 
   // Not a test we want to do.
   test('Name of Hero', () async {
-    await fixture.update((c) => c.hero = new Hero(1, "Windstorm")); // ignore: always_specify_types
+    await fixture.update((component) => component.selectedHero = new Hero(1, "Windstorm")); // ignore: always_specify_types
     expect(fixture.text, '''
     Tour of Heroes
     Windstorm details!
