@@ -2,29 +2,25 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'package:angular2/angular2.dart';
+import 'hero.dart';
+import 'hero_detail_component.dart';
 
 @Component(
-    selector: 'my-app',
-    directives: const [COMMON_DIRECTIVES], // ignore: always_specify_types
-    template: '''
+  selector: 'my-app',
+  directives: const [COMMON_DIRECTIVES, HeroDetailComponent], // ignore: always_specify_types
+  template: '''
     <h1>{{title}}</h1>
     <h2>My Heroes</h2>
     <ul class="heroes">
-    <li *ngFor="let hero of heroes" (click)="selectedHero = hero"
-    [class.selected]="hero == selectedHero">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </li>
+      <li *ngFor="let hero of heroes"
+        [class.selected]="hero == selectedHero"
+        (click)="onSelect(hero)">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+      </li>
     </ul>
 
-    <div *ngIf="selectedHero != null">
-      <h2>{{selectedHero.name}} details!</h2>
-      <div><label>id: </label>{{selectedHero.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedHero.name" placeholder="name">
-      </div>
-    </div>
-    ''',
+    <hero-detail [hero]="selectedHero"></hero-detail>
+  ''',
   styles: const [ // ignore: always_specify_types
     '''
       .selected {
@@ -74,14 +70,14 @@ import 'package:angular2/angular2.dart';
         border-radius: 4px 0px 0px 4px;
       }
     '''
-  ]//, directives: const [COMMON_DIRECTIVES],
+  ]
 )
 
 /// AppComponent class
 /// Container of all components of the app
 class AppComponent {
   /// Title of the app
-  final String title = "Tour of Heroes";
+  final String title = 'Tour of Heroes';
 
   /// Hero selected by user
   Hero selectedHero;
@@ -91,17 +87,6 @@ class AppComponent {
 
   /// Stores the hero selected by user
   void onSelect(Hero hero) => selectedHero = hero;
-}
-
-/// Class that defines the attributes of heroes
-class Hero {
-  /// Unique Id
-  final int id;
-  /// Hero's given name
-  String name;
-
-  /// Only constructor with parameters
-  Hero(this.id, this.name);
 }
 
 /// Hardcoded list of Heroes for the demo

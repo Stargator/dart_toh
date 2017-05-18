@@ -7,6 +7,8 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
 import 'package:angular_tour_of_heroes/app_component.dart';
+import 'package:angular_tour_of_heroes/hero.dart'; // Only Used for Bad Test
+
 import 'app_po.dart';
 
 /// Object that provides capability to test AppComponent
@@ -26,10 +28,7 @@ void main() {
     appPO = await fixture.resolvePageObject(AppPO);
   });
 
-  tearDown(() async {
-    fixture = null;
-    await disposeAnyRunningTest();
-  });
+  tearDown(disposeAnyRunningTest);
 
   group('Basics:', basicTests);
   group('Select hero:', selectHeroTests);
@@ -57,7 +56,7 @@ void basicTests() {
 
 /// Group of tests related to selecting a hero
 void selectHeroTests() {
-  const targetHero = const <String, dynamic>{'id': 16, 'name': 'RubberMan'}; // ignore: always_specify_types
+  const targetHero = const {'id': 16, 'name': 'RubberMan'}; // ignore: always_specify_types
 
   setUp(() async {
     await appPO.clickHero(5);

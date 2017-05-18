@@ -44,12 +44,12 @@ class AppPO {
   Future clickHero(int index) => _heroes[index].click(); // ignore: always_specify_types
 
   /// Hero selected by user
-  Future<Map> get selectedHero async => _selectedHero == null // ignore: always_specify_types
+  Future<Map<String, dynamic>> get selectedHero async => _selectedHero == null
       ? null
       : _heroDataFromLi(await _selectedHero.visibleText);
 
   /// Details of selected Hero
-  Future<Map> get heroFromDetails async { // ignore: always_specify_types
+  Future<Map<String, dynamic>> get heroFromDetails async {
     if (_heroDetailId == null) {
       return null;
     }
