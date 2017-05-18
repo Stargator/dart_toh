@@ -2,6 +2,9 @@
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'package:angular2/angular2.dart';
+import 'package:angular2/core.dart'; // Can be removed?
+import 'hero.dart';
+import 'hero_detail_component.dart';
 
 @Component(
     selector: 'my-app',
@@ -15,15 +18,10 @@ import 'package:angular2/angular2.dart';
     </li>
     </ul>
 
-    <div *ngIf="selectedHero != null">
-      <h2>{{selectedHero.name}} details!</h2>
-      <div><label>id: </label>{{selectedHero.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedHero.name" placeholder="name">
-      </div>
-    </div>
+    <my-hero-detail [hero]="selectedHero"></my-hero-detail>
     ''',
+    directives:
+    const [COMMON_DIRECTIVES, HeroDetailComponent],
   styles: const [
     '''
       .selected {
@@ -73,24 +71,17 @@ import 'package:angular2/angular2.dart';
         border-radius: 4px 0px 0px 4px;
       }
     '''
-  ]//, directives: const [COMMON_DIRECTIVES],
+  ]
 )
 
 class AppComponent {
   final String title = "Tour of Heroes";
-  Hero selectedHero;
   final List<Hero> heroes = mockHeroes;
+  Hero selectedHero;
 
   void onSelect(Hero hero) {
     selectedHero = hero;
   }
-}
-
-class Hero {
-  final int id;
-  String name;
-
-  Hero(this.id, this.name);
 }
 
 final mockHeroes = <Hero>[
