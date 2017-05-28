@@ -25,6 +25,7 @@ class HeroDetailPO {
     final idAsString = (await _heroDetailId.visibleText).split(' ')[1]; // ignore: always_specify_types
     final text = await _heroDetailHeading.visibleText;
     final matches = new RegExp((r'^(.*) details!$')).firstMatch(text); // ignore: always_specify_types
+
     return _heroData(idAsString, matches[1]);
   }
 
