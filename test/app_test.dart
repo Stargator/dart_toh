@@ -6,20 +6,20 @@ import 'package:angular_test/angular_test.dart';
 
 import 'package:test/test.dart';
 
-import 'package:angular_tour_of_heroes/app_component.dart';
+import 'package:angular_tour_of_heroes/heroes_component.dart';
 import 'package:angular_tour_of_heroes/hero.dart'; // Only Used for Bad Test
 
 import 'app_po.dart';
 
-/// Object that provides capability to test AppComponent
-NgTestFixture<AppComponent> fixture;
+/// Object that provides capability to test HeroesComponent
+NgTestFixture<HeroesComponent> fixture;
 
 /// Object mocking the AppComponent
 AppPO appPO;
 
 @AngularEntrypoint()
 void main() {
-  final testBed = new NgTestBed<AppComponent>(); // ignore: always_specify_types
+  final testBed = new NgTestBed<HeroesComponent>(); // ignore: always_specify_types
 
   setUp(() async {
     fixture = await testBed.create();
