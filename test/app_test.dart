@@ -5,13 +5,13 @@ import 'package:angular2/angular2.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-import 'package:angular_tour_of_heroes/app_component.dart';
+import 'package:angular_tour_of_heroes/heroes_component.dart';
 import 'package:angular_tour_of_heroes/hero.dart';
 
 @AngularEntrypoint()
 void main() {
-  final testBed = new NgTestBed<AppComponent>();
-  NgTestFixture<AppComponent> fixture;
+  final testBed = new NgTestBed<HeroesComponent>();
+  NgTestFixture<HeroesComponent> fixture;
 
   setUp(() async {
     fixture = await testBed.create();
