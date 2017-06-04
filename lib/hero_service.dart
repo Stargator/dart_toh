@@ -12,4 +12,7 @@ class HeroService {
 
   /// See the "Take it slow" appendix
   Future<List<Hero>> getHeroesSlowly() => new Future<List<Hero>>.delayed(const Duration(seconds: 2), getHeroes);
+
+  Future<Hero> getHero(int id) async =>
+      (await getHeroes()).firstWhere((hero) => hero.id == id);
 }
