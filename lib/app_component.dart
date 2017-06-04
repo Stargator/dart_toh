@@ -1,4 +1,3 @@
-
 import 'package:angular2/angular2.dart';
 import 'package:angular2/router.dart';
 
@@ -18,15 +17,18 @@ import 'heroes_component.dart';
     <router-outlet></router-outlet>
     ''',
     directives: const [ROUTER_DIRECTIVES],
-    providers: const [HeroService, ROUTER_PROVIDERS]
+    providers: const [HeroService, ROUTER_PROVIDERS],
+    styleUrls: const ['app_component.css']
 )
-
 @RouteConfig(const [
   const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent),
-  const Route(path: '/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true),
-  const Route(path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent)
+  const Route(path: '/dashboard',
+      name: 'Dashboard',
+      component: DashboardComponent,
+      useAsDefault: true),
+  const Route(
+      path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent)
 ])
-
 class AppComponent {
   final String title = "Tour of Heroes";
 }

@@ -7,9 +7,9 @@ import 'hero_service.dart';
 @Component(
     selector: 'my-dashboard',
     templateUrl: 'dashboard_component.html',
+    styleUrls: const ['dashboard_component.css'],
     directives: const [COMMON_DIRECTIVES, ROUTER_DIRECTIVES]
 )
-
 class DashboardComponent implements OnInit {
   List<Hero> heroes;
   final HeroService _heroService;

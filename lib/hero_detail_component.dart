@@ -6,18 +6,18 @@ import 'hero.dart';
 import 'hero_service.dart';
 
 @Component(
-  selector: 'hero-detail',
-  directives: const [COMMON_DIRECTIVES],
-  templateUrl: 'hero_detail_component.html'
-  )
-
+    selector: 'hero-detail',
+    directives: const [COMMON_DIRECTIVES],
+    templateUrl: 'hero_detail_component.html',
+    styleUrls: const ['hero_detail_component.css']
+)
 class HeroDetailComponent implements OnInit {
   final HeroService _heroService;
   final RouteParams _routeParams;
   final Location _location;
 
   HeroDetailComponent(this._heroService, this._routeParams, this._location);
-  @Input()
+
   Hero hero;
 
   @override
