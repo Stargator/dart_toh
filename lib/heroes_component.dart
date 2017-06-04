@@ -19,7 +19,7 @@ import 'hero_service.dart';
     </li>
     </ul>
 
-    <my-hero-detail [hero]="selectedHero"></my-hero-detail>
+    <hero-detail [hero]="selectedHero"></hero-detail>
     ''',
     directives: const [COMMON_DIRECTIVES, HeroDetailComponent],
     styles: const [

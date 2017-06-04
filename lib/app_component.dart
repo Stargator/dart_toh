@@ -2,6 +2,8 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/router.dart';
 
+import 'dashboard_component.dart';
+import 'hero_detail_component.dart';
 import 'hero_service.dart';
 import 'heroes_component.dart';
 
@@ -9,7 +11,10 @@ import 'heroes_component.dart';
   selector: "my-heroes",
   template: '''
     <h1>{{title}}</h1>
-    <a [routerLink]="['Heroes']">Heroes</a>
+    <nav>
+      <a [routerLink]="['Dashboard']">Dashboard</a>
+      <a [routerLink]="['Heroes']">Heroes</a>
+    </nav>
     <router-outlet></router-outlet>
     ''',
     directives: const [ROUTER_DIRECTIVES],
@@ -17,7 +22,9 @@ import 'heroes_component.dart';
 )
 
 @RouteConfig(const [
-  const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent)
+  const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent),
+  const Route(path: '/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true),
+  const Route(path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent)
 ])
 
 class AppComponent {
