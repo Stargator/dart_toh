@@ -4,29 +4,35 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/router.dart';
 
-import 'dashboard_component.dart';
-import 'hero_detail_component.dart';
-import 'hero_service.dart';
-import 'heroes_component.dart';
+import 'package:angular_tour_of_heroes/dashboard_component.dart';
+import 'package:angular_tour_of_heroes/hero_detail_component.dart';
+import 'package:angular_tour_of_heroes/hero_service.dart';
+import 'package:angular_tour_of_heroes/heroes_component.dart';
 
 @Component(
-    selector: "my-heroes",
-    directives: const [COMMON_DIRECTIVES, ROUTER_DIRECTIVES], // ignore: always_specify_types
-    providers: const [HeroService, ROUTER_PROVIDERS], // ignore: always_specify_types
-    template: '''
+  selector: "my-heroes",
+  directives: const [COMMON_DIRECTIVES, ROUTER_DIRECTIVES], // ignore: always_specify_types
+  providers: const [HeroService, ROUTER_PROVIDERS], // ignore: always_specify_types
+  styleUrls: const ['app_component.css'], // ignore: always_specify_types
+  template: '''
     <h1>{{title}}</h1>
     <nav>
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Heroes']">Heroes</a>
     </nav>
     <router-outlet></router-outlet>
-    ''',
+    '''
 )
 
-@RouteConfig(const [
-  const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent),
-  const Route(path: '/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true),
-  const Route(path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent)
+@RouteConfig(const [ // ignore: always_specify_types
+  const Route(
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: DashboardComponent,
+      useAsDefault: true),
+  const Route(
+      path: '/detail/:id', name: 'HeroDetail', component: HeroDetailComponent),
+  const Route(path: '/heroes', name: 'Heroes', component: HeroesComponent)
 ])
 
 /// AppComponent class
