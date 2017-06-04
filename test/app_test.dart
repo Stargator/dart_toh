@@ -1,25 +1,44 @@
+@Skip('AppComponent tests need bootstrap equivalent for the Router init')
 @Tags(const ['aot']) // ignore: always_specify_types
 @TestOn('browser')
 
 import 'package:angular2/angular2.dart';
+import 'package:angular2/platform/common.dart';
+import 'package:angular2/router.dart';
 import 'package:angular_test/angular_test.dart';
-
 import 'package:test/test.dart';
+import 'package:mockito/mockito.dart';
 
-import 'package:angular_tour_of_heroes/heroes_component.dart';
-import 'package:angular_tour_of_heroes/hero.dart'; // Only Used for Bad Test
+import 'package:angular_tour_of_heroes/app_component.dart';
 
 import 'app_po.dart';
 
-/// Object that provides capability to test HeroesComponent
-NgTestFixture<HeroesComponent> fixture;
+/// Object that provides capability to test AppComponent
+NgTestFixture<AppComponent> fixture;
 
 /// Object mocking the AppComponent
 AppPO appPO;
 
+/// Testable version of PlatformLocation
+class MockPlatformLocation extends Mock implements PlatformLocation {}
+
+///Instance of testable PlatformLocation
+final MockPlatformLocation mockPlatformLocation = new MockPlatformLocation();
+
 @AngularEntrypoint()
 void main() {
-  final testBed = new NgTestBed<HeroesComponent>(); // ignore: always_specify_types
+  final providers = [ // ignore: always_specify_types
+    provide(APP_BASE_HREF, useValue: '/'),
+    provide(ROUTER_PRIMARY_COMPONENT, useValue: AppComponent),
+    provide(PlatformLocation, useValue: mockPlatformLocation),
+  ];
+
+  final testBed = new NgTestBed<AppComponent>().addProviders(providers); // ignore: always_specify_types
+
+  setUpAll(() async {
+    // Seems like we'd need to do something equivalent to:
+    // bootstrap(AppComponent);
+  });
 
   setUp(() async {
     fixture = await testBed.create();
@@ -31,7 +50,6 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   group('Basics:', basicTests);
-  group('Select hero:', selectHeroTests);
 //  group('Bad Tests:', badTests); // Do NOT run these tests
 }
 
@@ -41,90 +59,8 @@ void basicTests() {
     expect(await appPO.pageTitle, 'Tour of Heroes');
   });
 
-  test('tab title', () async {
-    expect(await appPO.tabTitle, 'My Heroes');
-  });
-
-  test('hero count', () {
-    expect(appPO.heroes.length, 10);
-  });
-
-  test('no selected hero', () async {
-    expect(await appPO.selectedHero, null);
-  });
-}
-
-/// Group of tests related to selecting a hero
-void selectHeroTests() {
-  const targetHero = const {'id': 16, 'name': 'RubberMan'}; // ignore: always_specify_types
-
-  setUp(() async {
-    await appPO.clickHero(5);
-    appPO = await fixture.resolvePageObject(AppPO); // Refresh PO
-  });
-
-  test('is selected', () async {
-    expect(await appPO.selectedHero, targetHero);
-  });
-
-  test('show hero details', () async {
-    expect(await appPO.heroFromDetails, targetHero);
-  });
-
-//    expect(await appPO.heroName, targetHero['name'] + nameSuffix);
-  group('Update hero:', () {
-    const nameSuffix = 'X'; // ignore: always_specify_types
-    final updatedHero = new Map.from(targetHero);
-    updatedHero['name'] = "${targetHero['name']}$nameSuffix";
-
-    setUp(() async {
-      await appPO.type(nameSuffix);
-    });
-
-    tearDown(() async {
-      // Restore hero name
-      await appPO.clear();
-      await appPO.type(targetHero['name']);
-    });
-
-    test('name in list is updated', () async {
-      expect(await appPO.selectedHero, updatedHero);
-    });
-
-    test('name in details view is updated', () async {
-      expect(await appPO.heroFromDetails, updatedHero);
-    });
-  });
-}
-
-/// Collection of tests that are fragile
-void badTests() {
-
-  // Not a test we want to do.
-  test('Use fixture to get innerHTMLL', () {
-    final html = fixture.rootElement.innerHtml; // ignore: always_specify_types
-    expect(html, '''
-    <h1>Tour of Heroes</h1>
-    <h2>Windstorm details!</h2>
-    <div><label>id: </label>1</div>
-    <div>
-      <label>name: </label>
-      <input placeholder="name">
-    </div>
-    ''');
-  });
-
-  // Not a test we want to do.
-  test('Name of Hero', () async {
-    await fixture.update((component) => component.selectedHero = new Hero(1, "Windstorm")); // ignore: always_specify_types
-    expect(fixture.text, '''
-    Tour of Heroes
-    Windstorm details!
-    id: 1
-    
-      name: 
-      
-    
-    ''');
+  test('tab titles', () async {
+    final expectTitles = ['Dashboard', 'Heroes']; // ignore: always_specify_types
+    expect(await appPO.tabTitles, expectTitles);
   });
 }

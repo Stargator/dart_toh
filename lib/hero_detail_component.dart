@@ -1,35 +1,41 @@
 import 'dart:async';
+
 import 'package:angular2/angular2.dart';
-import 'package:angular2/platform/common.dart';
 import 'package:angular2/router.dart';
+import 'package:angular2/platform/common.dart';
 
 import 'package:angular_tour_of_heroes/hero.dart';
-import 'hero_service.dart';
+import 'package:angular_tour_of_heroes/hero_service.dart';
 
 @Component(
-  selector: 'hero-detail',
-  directives: const <dynamic>[COMMON_DIRECTIVES],
-  templateUrl: 'hero_detail_component.html'
+    selector: 'hero-detail',
+    directives: const <dynamic>[COMMON_DIRECTIVES],
+    templateUrl: 'hero_detail_component.html',
+    styleUrls: const <String>['hero_detail_component.css']
 )
 
 /// Component for information on Heroes
 class HeroDetailComponent implements OnInit {
+
+  /// Hero whose details are displayed
+  Hero hero;
   final HeroService _heroService;
   final RouteParams _routeParams;
   final Location _location;
 
-  /// Hero changed by user input
-  @Input()
-  Hero hero;
-
+  /// Constructor for Component
   HeroDetailComponent(this._heroService, this._routeParams, this._location);
 
   @override
   Future<Null> ngOnInit() async {
-    var _id = _routeParams.get('id');
-    var id = int.parse(_id ?? '', onError: (_) => null);
-    if (id != null) hero = await (_heroService.getHero(id));
+    final _id = _routeParams.get('id'); // ignore: always_specify_types
+    final id = int.parse(_id ?? '', onError: (_) => null);
+
+    if (id != null) {
+      hero = await (_heroService.getHero(id));
+    }
   }
 
+  /// Navigational function to go to previous view
   void goBack() => _location.back();
 }

@@ -229,6 +229,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.3"
+  mockito:
+    description:
+      name: mockito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   node_preamble:
     description:
       name: node_preamble
