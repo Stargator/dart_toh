@@ -22,8 +22,7 @@ class HeroesPO {
   PageLoaderElement _miniDetailHeading;
 
   @ByTagName('button')
-  @optional
-  PageLoaderElement _gotoDetail;
+  List<PageLoaderElement> _gotoDetail;
 
   /// Title for component
   Future<String> get title => _title.visibleText;
@@ -52,7 +51,7 @@ class HeroesPO {
   }
 
   /// Navigation to detail view
-  Future<Null> gotoDetail() => _gotoDetail.click();
+  Future<Null> gotoDetail() => _gotoDetail[1].click();
 
   Map<String, dynamic> _heroDataFromLi(String liText) {
     final matches = new RegExp((r'^(\d+) (.*)$')).firstMatch(liText); // ignore: always_specify_types

@@ -45,6 +45,17 @@ class HeroesComponent implements OnInit {
     <String, dynamic>{'id': selectedHero.id.toString()}
   ]);
 
+  Future<Null> add(String name) async {
+    name = name.trim();
+
+    if (name.isEmpty) {
+      return;
+    }
+
+    heroes.add(await _heroService.create(name));
+    selectedHero = null;
+  }
+
   /// Function to handle logic when hero is selected
   void onSelect(Hero hero) => selectedHero = hero;
 
