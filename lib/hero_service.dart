@@ -66,4 +66,16 @@ class HeroService {
     print(e); // for demo purposes only
     return new Exception("Server error; cause $e");
   }
+
+  Future<Hero> create(String name) async {
+    try {
+      final response = await _http.post(_heroesUrl, headers: _headers, body: JSON.encode({'name': name}));
+
+      final hero = new Hero.fromJson(_extractData(response));
+
+      return hero;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
 }
