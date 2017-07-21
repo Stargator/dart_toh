@@ -5,12 +5,14 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/common.dart';
 import 'package:angular2/router.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import 'package:angular_tour_of_heroes/app_component.dart';
 import 'package:angular_tour_of_heroes/dashboard_component.dart';
 import 'package:angular_tour_of_heroes/hero_service.dart';
+import 'package:angular_tour_of_heroes/in_memory_data_service.dart';
 
 import 'dashboard_po.dart';
 
@@ -31,6 +33,7 @@ void main() {
   final providers = new List.from(ROUTER_PROVIDERS) // ignore: always_specify_types
     ..addAll([
       provide(APP_BASE_HREF, useValue: '/'),
+      provide(Client, useClass: InMemoryDataService),
       provide(PlatformLocation, useValue: mockPlatformLocation),
       provide(ROUTER_PRIMARY_COMPONENT, useValue: AppComponent),
       HeroService,
