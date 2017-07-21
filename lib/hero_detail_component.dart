@@ -11,6 +11,7 @@ import 'hero_service.dart';
     templateUrl: 'hero_detail_component.html',
     styleUrls: const ['hero_detail_component.css']
 )
+
 class HeroDetailComponent implements OnInit {
   final HeroService _heroService;
   final RouteParams _routeParams;
@@ -28,4 +29,9 @@ class HeroDetailComponent implements OnInit {
   }
 
   void goBack() => _location.back();
+
+  Future<Null> save() async {
+    await (_heroService.update(hero));
+    goBack();
+  }
 }
