@@ -349,12 +349,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
-  stream_transformers:
+  stream_transform:
     description:
-      name: stream_transformers
+      name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0+3"
+    version: "0.0.8"
   string_scanner:
     description:
       name: string_scanner
@@ -416,4 +416,4 @@ packages:
     source: hosted
     version: "2.1.12"
 sdks:
-  dart: ">=1.24.0 <2.0.0-dev.infinity"
+  dart: ">=1.24.2 <2.0.0-dev.infinity"
