@@ -38,4 +38,9 @@ class HeroDetailComponent implements OnInit {
 
   /// Navigational function to go to previous view
   void goBack() => _location.back();
+
+  Future<Null> save() async {
+    await (_heroService.update(hero));
+    goBack();
+  }
 }
