@@ -21,8 +21,8 @@ class HeroesPO {
   @optional
   PageLoaderElement _miniDetailHeading;
 
-  @ByTagName('button')
-  List<PageLoaderElement> _gotoDetail;
+  @ByCss('div button')
+  List<PageLoaderElement> _buttons;
 
   /// Title for component
   Future<String> get title => _title.visibleText;
@@ -51,10 +51,10 @@ class HeroesPO {
   }
 
   /// Navigation to detail view
-  Future<Null> gotoDetail() => _gotoDetail[1].click();
+  Future<Null> gotoDetail() async => _buttons[1].click();
 
   Map<String, dynamic> _heroDataFromLi(String liText) {
-    final matches = new RegExp((r'^(\d+) (.*)$')).firstMatch(liText); // ignore: always_specify_types
+    final matches = new RegExp((r'^(\d+) (.*) x$')).firstMatch(liText); // ignore: always_specify_types
     return heroData(matches[1], matches[2]);
   }
 }
