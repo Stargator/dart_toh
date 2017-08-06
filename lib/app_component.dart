@@ -11,7 +11,7 @@ import 'package:angular_tour_of_heroes/heroes_component.dart';
 
 @Component(
   selector: "my-heroes",
-  directives: const [COMMON_DIRECTIVES, ROUTER_DIRECTIVES], // ignore: always_specify_types
+  directives: const [ROUTER_DIRECTIVES], // ignore: always_specify_types
   providers: const [HeroService, ROUTER_PROVIDERS], // ignore: always_specify_types
   styleUrls: const ['app_component.css'], // ignore: always_specify_types
   template: '''

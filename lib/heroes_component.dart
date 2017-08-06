@@ -8,12 +8,13 @@ import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
 
 import 'package:angular_tour_of_heroes/hero.dart';
+import 'package:angular_tour_of_heroes/hero_detail_component.dart';
 import 'package:angular_tour_of_heroes/hero_service.dart';
 
 @Component(
   selector: 'my-heroes',
   templateUrl: 'heroes_component.html',
-  directives: const [CORE_DIRECTIVES], // ignore: always_specify_types
+  directives: const [CORE_DIRECTIVES, HeroDetailComponent], // ignore: always_specify_types
   providers: const [HeroService],
   styleUrls: const ['heroes_component.css'], // ignore: always_specify_types
   pipes: const [COMMON_PIPES],
@@ -39,12 +40,6 @@ class HeroesComponent implements OnInit {
     heroes = await _heroService.getHeroes();
   }
 
-  /// Navigational function to transition to Detail view
-  Future<Null> gotoDetail() => _router.navigate(<dynamic>[
-    'HeroDetail',
-    <String, dynamic>{'id': selectedHero.id.toString()}
-  ]);
-
   Future<Null> add(String name) async {
     name = name.trim();
 
@@ -62,11 +57,17 @@ class HeroesComponent implements OnInit {
     if (selectedHero == hero) selectedHero = null;
   }
 
-  /// Function to handle logic when hero is selected
-  void onSelect(Hero hero) => selectedHero = hero;
-
   @override
   void ngOnInit() {
     getHeroes();
   }
+
+  /// Function to handle logic when hero is selected
+  void onSelect(Hero hero) => selectedHero = hero;
+
+  /// Navigational function to transition to Detail view
+  Future<Null> gotoDetail() => _router.navigate(<dynamic>[
+    'HeroDetail',
+    <String, dynamic>{'id': selectedHero.id.toString()}
+  ]);
 }

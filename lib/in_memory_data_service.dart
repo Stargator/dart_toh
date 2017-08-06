@@ -1,3 +1,5 @@
+// Note: MockClient constructor API forces all InMemoryDataService members to
+// be static.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -6,7 +8,7 @@ import 'package:angular2/angular2.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 
-import 'hero.dart';
+import 'package:angular_tour_of_heroes/hero.dart';
 
 @Injectable()
 class InMemoryDataService extends MockClient {
@@ -31,7 +33,7 @@ class InMemoryDataService extends MockClient {
     switch (request.method) {
       case 'GET':
         final id =
-        int.parse(request.url.pathSegments.last, onError: (_) => null);
+            int.parse(request.url.pathSegments.last, onError: (_) => null);
         if (id != null) {
           data = _heroesDb
               .firstWhere((hero) => hero.id == id); // throws if no match

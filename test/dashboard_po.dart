@@ -12,6 +12,15 @@ class DashboardPO {
   @ByTagName('a')
   List<PageLoaderElement> _heroes;
 
+  @ByTagName('input')
+  PageLoaderElement search;
+
+  @ByCss('div[id="search-component"] div div')
+  List<PageLoaderElement> _heroesFound;
+
+  @ByCss('div[id="search-component"]')
+  PageLoaderElement heroSearchDiv;
+
   /// The title within the component
   Future<String> get title => _title.visibleText;
 
@@ -21,4 +30,7 @@ class DashboardPO {
 
   /// Function to handle the logic for clicking on a Hero
   Future<dynamic> clickHero(int index) => _heroes[index].click();
+
+  Future<List<String>> get heroesFound =>
+      inIndexOrder(_heroesFound.map((el) => el.visibleText)).toList();
 }

@@ -21,9 +21,14 @@ class HeroesPO {
   @optional
   PageLoaderElement _miniDetailHeading;
 
-  @ByTagName('button')
-  @optional
-  PageLoaderElement _gotoDetail;
+  @ByCss('div button')
+  List<PageLoaderElement> _buttons;
+
+  @ByCss('li button')
+  List<PageLoaderElement> _deleteHeroes;
+
+  @ByTagName('input')
+  PageLoaderElement _input;
 
   /// Title for component
   Future<String> get title => _title.visibleText;
@@ -34,6 +39,8 @@ class HeroesPO {
 
   /// Function to handle logic when clicking on a Hero
   Future<dynamic> clickHero(int index) => _heroes[index].click();
+
+  Future deleteHero(int index) => _deleteHeroes[index].click();
 
   /// Retrieve the selected Hero
   Future<Map<String, dynamic>> get selectedHero async => _selectedHero == null
@@ -51,11 +58,17 @@ class HeroesPO {
     return matches[1];
   }
 
+  Future<Null> addHero(String name) async {
+    await _input.clear();
+    await _input.type(name);
+    return _buttons[0].click();
+  }
+
   /// Navigation to detail view
-  Future<Null> gotoDetail() => _gotoDetail.click();
+  Future<Null> gotoDetail() async => _buttons[1].click();
 
   Map<String, dynamic> _heroDataFromLi(String liText) {
-    final matches = new RegExp((r'^(\d+) (.*)$')).firstMatch(liText); // ignore: always_specify_types
+    final matches = new RegExp((r'^(\d+) (.*) x$')).firstMatch(liText); // ignore: always_specify_types
     return heroData(matches[1], matches[2]);
   }
 }
