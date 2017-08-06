@@ -5,12 +5,13 @@ import 'package:angular2/router.dart';
 
 import 'package:angular_tour_of_heroes/hero.dart';
 import 'package:angular_tour_of_heroes/hero_service.dart';
+import 'package:angular_tour_of_heroes/hero_search_component.dart';
 
 @Component(
     selector: 'my-dashboard',
     templateUrl: 'dashboard_component.html',
     styleUrls: const ['dashboard_component.css'], // ignore: always_specify_types
-    directives: const [CORE_DIRECTIVES, ROUTER_DIRECTIVES]
+    directives: const [CORE_DIRECTIVES, ROUTER_DIRECTIVES, HeroSearchComponent]
 )
 
 /// Component that handles the UI and logic of dashboard

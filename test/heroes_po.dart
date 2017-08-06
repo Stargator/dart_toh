@@ -24,6 +24,12 @@ class HeroesPO {
   @ByCss('div button')
   List<PageLoaderElement> _buttons;
 
+  @ByCss('li button')
+  List<PageLoaderElement> _deleteHeroes;
+
+  @ByTagName('input')
+  PageLoaderElement _input;
+
   /// Title for component
   Future<String> get title => _title.visibleText;
 
@@ -33,6 +39,8 @@ class HeroesPO {
 
   /// Function to handle logic when clicking on a Hero
   Future<dynamic> clickHero(int index) => _heroes[index].click();
+
+  Future deleteHero(int index) => _deleteHeroes[index].click();
 
   /// Retrieve the selected Hero
   Future<Map<String, dynamic>> get selectedHero async => _selectedHero == null
@@ -48,6 +56,12 @@ class HeroesPO {
     final text = await _miniDetailHeading.visibleText; // ignore: always_specify_types
     final matches = new RegExp((r'^(.*) is my hero\s*$')).firstMatch(text);
     return matches[1];
+  }
+
+  Future<Null> addHero(String name) async {
+    await _input.clear();
+    await _input.type(name);
+    return _buttons[0].click();
   }
 
   /// Navigation to detail view

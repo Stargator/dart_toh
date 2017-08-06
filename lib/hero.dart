@@ -9,10 +9,13 @@ class Hero {
   /// A hero's origin
   Hero(this.id, this.name);
 
+  /// Convert JSON to Hero object
   factory Hero.fromJson(Map<String, dynamic> hero) =>
       new Hero(_toInt(hero['id']), hero['name']);
 
-  Map toJson() => {'id': id, 'name': name};
+  /// Convert Hero object to JSON
+  Map<String, dynamic> toJson() => <String, dynamic>{'id': id, 'name': name};
 }
 
-  int _toInt(id) => id is int ? id : int.parse(id);
+/// JAM - Had to not specify type for tests to pass
+int _toInt(id) => id is int ? id : int.parse(id);

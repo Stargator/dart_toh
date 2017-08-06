@@ -19,7 +19,7 @@ class HeroDetailPO {
   PageLoaderElement _input;
 
   @ByTagName('button')
-  List<PageLoaderElement> _button;
+  List<PageLoaderElement> _buttons;
 
   /// Retrieve information about hero
   Future<Map<String, dynamic>> get heroFromDetails async {
@@ -40,5 +40,7 @@ class HeroDetailPO {
   Future<dynamic> type(String s) => _input.type(s);
 
   /// Navigational function to go to the previous view
-  Future<dynamic> back() => _button[0].click();
+  Future<dynamic> back() => _buttons[0].click();
+
+  Future<dynamic> save() => _buttons[1].click();
 }

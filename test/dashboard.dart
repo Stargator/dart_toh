@@ -1,6 +1,8 @@
 @Tags(const <String>['aot'])
 @TestOn('browser')
 
+import 'dart:async';
+
 import 'package:angular2/angular2.dart';
 import 'package:angular2/platform/common.dart';
 import 'package:angular2/router.dart';
@@ -10,6 +12,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import 'package:angular_tour_of_heroes/app_component.dart';
+import 'package:angular_tour_of_heroes/in_memory_data_service.dart';
 import 'package:angular_tour_of_heroes/dashboard_component.dart';
 import 'package:angular_tour_of_heroes/hero_service.dart';
 import 'package:angular_tour_of_heroes/in_memory_data_service.dart';
@@ -34,8 +37,8 @@ void main() {
     ..addAll([
       provide(APP_BASE_HREF, useValue: '/'),
       provide(Client, useClass: InMemoryDataService),
-      provide(PlatformLocation, useValue: mockPlatformLocation),
       provide(ROUTER_PRIMARY_COMPONENT, useValue: AppComponent),
+      provide(PlatformLocation, useValue: mockPlatformLocation),
       HeroService,
     ]);
   final testBed = new NgTestBed<DashboardComponent>().addProviders(providers); // ignore: always_specify_types
@@ -68,5 +71,30 @@ void main() {
     await po.clickHero(3);
     final c = verify(mockPlatformLocation.pushState(any, any, captureAny)); // ignore: always_specify_types
     expect(c.captured.single, '/detail/15');
+  });
+
+  test('no search no heroes', () async {
+    expect(await po.heroesFound, []);
+  });
+
+  group('Search hero:', heroSearchTests);
+}
+
+void heroSearchTests() {
+  final matchedHeroNames = [
+    'Magneta',
+    'RubberMan',
+    'Dynama',
+    'Magma',
+  ];
+
+  setUp(() async {
+    await po.search.type('ma');
+    await new Future.delayed(const Duration(seconds: 1));
+    po = await fixture.resolvePageObject(DashboardPO);
+  });
+
+  test('list matching heroes', () async {
+    expect(await po.heroesFound, matchedHeroNames);
   });
 }
