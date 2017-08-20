@@ -5,7 +5,7 @@ import 'package:angular2/angular2.dart';
 
 @Component(
     selector: 'my-app',
-    directives: const [COMMON_DIRECTIVES], // ignore: always_specify_types
+    directives: const [COMMON_DIRECTIVES],
     template: '''
     <h1>{{title}}</h1>
     <h2>{{hero.name}} details!</h2>

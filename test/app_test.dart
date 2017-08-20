@@ -1,4 +1,4 @@
-@Tags(const ['aot']) // ignore: always_specify_types
+@Tags(const ['aot'])
 @TestOn('browser')
 
 import 'dart:async';
@@ -29,13 +29,13 @@ class AppPO {
 
   /// Id of listed Hero Object
   Future<int> get heroId async {
-    final idAsString = (await _id.visibleText).split(' ')[1]; // ignore: always_specify_types
+    final idAsString = (await _id.visibleText).split(' ')[1];
     return int.parse(idAsString, onError: (_) => -1);
   }
 
   /// Name of listed Hero Object
   Future<String> get heroName async {
-    final text = await _name.visibleText; // ignore: always_specify_types
+    final text = await _name.visibleText;
     return text.substring(0, text.lastIndexOf(' '));
   }
 
@@ -45,10 +45,10 @@ class AppPO {
 
 @AngularEntrypoint()
 void main() {
-  final testBed = new NgTestBed<AppComponent>(); // ignore: always_specify_types
+  final testBed = new NgTestBed<AppComponent>();
   NgTestFixture<AppComponent> fixture;
   AppPO appPO;
-  const windstormData = const <String, dynamic>{'id': 1, 'name': 'Windstorm'}; // ignore: always_specify_types
+  const windstormData = const <String, dynamic>{'id': 1, 'name': 'Windstorm'};
 
   setUp(() async {
     fixture = await testBed.create();
@@ -72,7 +72,7 @@ void main() {
   });
 
   test('update hero name', () async {
-    const nameSuffix = 'X'; // ignore: always_specify_types
+    const nameSuffix = 'X';
 
     await appPO.type(nameSuffix);
     expect(await appPO.heroId, windstormData['id']);
@@ -81,7 +81,7 @@ void main() {
 
   // Not a test we want to do.
   test('Use fixture to get innerHTMLL', () {
-    final html = fixture.rootElement.innerHtml; // ignore: always_specify_types
+    final html = fixture.rootElement.innerHtml;
     expect(html, '''
     <h1>Tour of Heroes</h1>
     <h2>Windstorm details!</h2>
@@ -95,7 +95,7 @@ void main() {
 
   // Not a test we want to do.
   test('Name of Hero', () async {
-    await fixture.update((c) => c.hero = new Hero(1, "Windstorm")); // ignore: always_specify_types
+    await fixture.update((c) => c.hero = new Hero(1, "Windstorm"));
     expect(fixture.text, '''
     Tour of Heroes
     Windstorm details!
