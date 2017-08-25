@@ -40,9 +40,7 @@ void main() {
   final testBed = // ignore: always_specify_types
       new NgTestBed<HeroDetailComponent>().addProviders(baseProviders);
 
-  setUp(() {
-    InMemoryDataService.resetDb();
-  });
+  setUp(InMemoryDataService.resetDb);
 
   tearDown(disposeAnyRunningTest);
 
@@ -64,7 +62,7 @@ void main() {
     setUp(() async {
       final groupTestBed = testBed.fork().addProviders([ // ignore: always_specify_types
         provide(RouteParams,
-            useValue: new RouteParams({'id': targetHero['id'].toString()}))
+            useValue: new RouteParams(<String, String>{'id': targetHero['id'].toString()}))
       ]);
       fixture = await groupTestBed.create();
       po = await fixture.resolvePageObject(HeroDetailPO);
@@ -91,14 +89,14 @@ void main() {
       test('discard changes', () async {
         await po.back();
         verify(mockPlatformLocation.back());
-        final name = InMemoryDataService.lookUpName(targetHero['id']);
+        final name = InMemoryDataService.lookUpName(targetHero['id']); // ignore: always_specify_types
         expect(name, targetHero['name']);
       });
 
       test('save changes and go back', () async {
         await po.save();
         verify(mockPlatformLocation.back());
-        final name = InMemoryDataService.lookUpName(targetHero['id']);
+        final name = InMemoryDataService.lookUpName(targetHero['id']); // ignore: always_specify_types
         expect(name, updatedHero['name']);
       });
     });

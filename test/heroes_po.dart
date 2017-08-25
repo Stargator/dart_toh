@@ -40,7 +40,8 @@ class HeroesPO {
   /// Function to handle logic when clicking on a Hero
   Future<dynamic> clickHero(int index) => _heroes[index].click();
 
-  Future deleteHero(int index) => _deleteHeroes[index].click();
+  /// Trigger delete mechanism
+  Future deleteHero(int index) => _deleteHeroes[index].click(); // ignore: always_specify_types
 
   /// Retrieve the selected Hero
   Future<Map<String, dynamic>> get selectedHero async => _selectedHero == null
@@ -58,6 +59,7 @@ class HeroesPO {
     return matches[1];
   }
 
+  /// Mock process for adding a Hero
   Future<Null> addHero(String name) async {
     await _input.clear();
     await _input.type(name);

@@ -42,5 +42,6 @@ class HeroDetailPO {
   /// Navigational function to go to the previous view
   Future<dynamic> back() => _buttons[0].click();
 
+  /// Trigger save mechanism
   Future<dynamic> save() => _buttons[1].click();
 }

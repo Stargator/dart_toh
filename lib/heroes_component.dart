@@ -40,21 +40,26 @@ class HeroesComponent implements OnInit {
     heroes = await _heroService.getHeroes();
   }
 
+  /// Add Hero to list
   Future<Null> add(String name) async {
-    name = name.trim();
+    final newName = name.trim(); // ignore: always_specify_types
 
-    if (name.isEmpty) {
+    if (newName.isEmpty) {
       return;
     }
 
-    heroes.add(await _heroService.create(name));
+    heroes.add(await _heroService.create(newName));
     selectedHero = null;
   }
 
+  /// Remove Hero from list
   Future<Null> delete(Hero hero) async {
     await _heroService.delete(hero.id);
     heroes.remove(hero);
-    if (selectedHero == hero) selectedHero = null;
+
+    if (selectedHero == hero) {
+      selectedHero = null;
+    }
   }
 
   @override

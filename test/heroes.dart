@@ -15,9 +15,14 @@ import 'package:angular_tour_of_heroes/in_memory_data_service.dart';
 import 'heroes_po.dart';
 import 'utils.dart';
 
-const numHeroes = 10;
-const targetHeroIndex = 4; // index in full heroes list
-const targetHero = const {'id': 15, 'name': 'Magneta'};
+/// Number of Heroes to display
+const int numHeroes = 10;
+
+/// Index to find Hero in list
+const int targetHeroIndex = 4; // index in full heroes list
+
+/// Mock Hero object
+const Map<String, Object> targetHero = const <String, Object>{'id': 15, 'name': 'Magneta'};
 
 /// Object that provides capability to test HeroesComponent
 NgTestFixture<HeroesComponent> fixture;
@@ -103,8 +108,9 @@ void selectedHeroTests() {
   });
 }
 
+/// Group of rests for adding Heroes
 void addHeroTests() {
-  const newHeroName = 'Carl';
+  const newHeroName = 'Carl'; // ignore: always_specify_types
 
   setUp(() async {
     await po.addHero(newHeroName);
@@ -124,8 +130,9 @@ void addHeroTests() {
   });
 }
 
+/// Group of tests of deleting Heroes
 void deleteHeroTests() {
-  List<Map> heroesWithoutTarget = [];
+  var heroesWithoutTarget = []; // ignore: always_specify_types
 
   setUp(() async {
     heroesWithoutTarget = await inIndexOrder(po.heroes).toList()

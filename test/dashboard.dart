@@ -74,14 +74,15 @@ void main() {
   });
 
   test('no search no heroes', () async {
-    expect(await po.heroesFound, []);
+    expect(await po.heroesFound, <dynamic>[]);
   });
 
   group('Search hero:', heroSearchTests);
 }
 
+/// Group of tests related to searching heroes
 void heroSearchTests() {
-  final matchedHeroNames = [
+  final matchedHeroNames = [ // ignore: always_specify_types
     'Magneta',
     'RubberMan',
     'Dynama',
@@ -90,7 +91,7 @@ void heroSearchTests() {
 
   setUp(() async {
     await po.search.type('ma');
-    await new Future.delayed(const Duration(seconds: 1));
+    await new Future<dynamic>.delayed(const Duration(seconds: 1));
     po = await fixture.resolvePageObject(DashboardPO);
   });
 
