@@ -1,8 +1,14 @@
 language: dart
 
-dart:
-# Install a specific stable release
-- '1.24.2'
+matrix:
+  include:
+    - dart: '1.24.2'
+    - dart: stable
+    - dart: dev
+  allow_failures:
+    - dart: dev
+  fast_finish: true
+sudo: false
 
 branches:
   only:
@@ -11,11 +17,20 @@ branches:
 install_dartium: true
 xvfb: false
 
-script: pub run angular_test
+cache:
+  apt: true
+  directories:
+    - $HOME/.pub-cache
+
+install:
+  - travis_retry pub get
+
+script:
+  - pub run grinder analyze lint
+  - pub run angular_test
 
 dart_task:
 
  # Warnings are fatal, but we only analyze the lib/ directory.
- - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
- - dartfmt
-
+  - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
+  - dartfmt
