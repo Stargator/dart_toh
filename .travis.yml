@@ -9,9 +9,6 @@ branches:
   only:
   - toh-test-travis
 
-install_dartium: true
-xvfb: false
-
 cache:
   apt: true
   directories:
@@ -22,3 +19,7 @@ install:
 
 script:
   - pub run angular_test
+
+dart_task:
+  install_dartium: true
+  xvfb: false
