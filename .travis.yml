@@ -9,8 +9,6 @@ branches:
   - toh-test-travis
 
 dart_task:
- - angular_test
-
  install_dartium: true
 
  # Warnings are fatal, but we only analyze the lib/ directory.
