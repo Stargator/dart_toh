@@ -9,12 +9,13 @@ branches:
   - toh-test-travis
 
 install_dartium: true
+xvfb: false
+
+script: pub run angular_test
 
 dart_task:
 
  # Warnings are fatal, but we only analyze the lib/ directory.
  - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
  - dartfmt
- - pub run angular_test
 
-xvfb: false
