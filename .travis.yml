@@ -3,11 +3,7 @@ language: dart
 matrix:
   include:
     - dart: '1.24.2'
-    - dart: stable
-    - dart: dev
-  allow_failures:
-    - dart: dev
-  fast_finish: true
+  fast_finish: false
 
 branches:
   only:
