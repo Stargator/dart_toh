@@ -8,8 +8,9 @@ branches:
   only:
   - toh-test-travis
 
+install_dartium: true
+
 dart_task:
- install_dartium: true
 
  # Warnings are fatal, but we only analyze the lib/ directory.
  - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
