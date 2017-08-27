@@ -16,3 +16,4 @@ dart_task:
  - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
  - dartfmt
  - pub run angular_test
+ xvfb: false
