@@ -21,11 +21,4 @@ install:
   - travis_retry pub get
 
 script:
-#  - pub run grinder analyze lint
   - pub run angular_test
-
-dart_task:
-
- # Warnings are fatal, but we only analyze the lib/ directory.
-  - dartanalyzer: --fatal-warnings lib/ --ignore-unrecognized-flags --no-hints --options=analysis_options.yaml
-  - dartfmt
