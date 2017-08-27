@@ -15,8 +15,10 @@ dev_dependencies:
   angular_test: 1.0.0-beta+3
   browser: ^0.10.0+2
   dart_to_js_script_rewriter: ^1.0.3
+  grinder: ^0.8.0
   mockito: ^2.0.2
   test: ^0.12.24
+  tuneup: ^0.3.1
 
 transformers:
 - angular2:

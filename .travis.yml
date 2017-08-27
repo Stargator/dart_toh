@@ -14,7 +14,6 @@ branches:
   only:
   - toh-test-travis
 
-install_dartium: true
 xvfb: false
 
 cache:
@@ -27,7 +26,7 @@ install:
 
 script:
   - pub run grinder analyze lint
-  - pub run angular_test
+  - pub run angular_test --test-arg=--platform=firefox --test-arg=--platform=chrome --test-arg=--platform=vm
 
 dart_task:
 
